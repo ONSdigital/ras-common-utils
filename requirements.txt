@@ -1,0 +1,5 @@
+Flask==0.12.2
+PyYAML==3.12
+SQLAlchemy==1.1.10
+structlog==17.2.0
+zest.releaser[recommended]

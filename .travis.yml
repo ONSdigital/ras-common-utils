@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install -r test-requirements.txt
+script:
+  - ONS_ENV=travis PYTHONPATH="`pwd`:$PYTHONPATH" py.test --cov-report term-missing --cov-config=.coveragerc --cov=ras_common_utils/
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+notifications:
+    slack: surveydatacollection:LCbNJJpDoY3gYIvLOlK0nZkV
