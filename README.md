@@ -58,3 +58,14 @@ service:
     host: 0.0.0.0
     port: 8080
 ```
+
+## Testing
+
+Ensure you have [tox](https://tox.readthedocs.io/en/latest/) installed, and simply run `tox` in the project root.
+
+## Build / release
+
+Using [zest.releaser](https://pypi.python.org/pypi/zest.releaser) (included in the requirements.txt file). 
+
+Please read the zest.releaser documentation to see the available commands and what they do.
+In general, run the command `fullrelease` in the project root. To suppress prompts, run `fullrelease --no-input`.
