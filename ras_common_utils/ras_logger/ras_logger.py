@@ -17,7 +17,7 @@ def _configure_structlogger(config):
         """
         Add the service name to the event dict.
         """
-        event_dict['service'] = config['name']
+        event_dict['service'] = config['NAME']
         return event_dict
 
     processors = [
@@ -41,7 +41,7 @@ def _configure_basiclogger(config):
     logging.basicConfig(
         format="%(message)s",
         stream=sys.stdout,
-        level=LEVELS.get(config.get('log_level', 'INFO').lower(), logging.INFO)
+        level=LEVELS.get(config.get('LOG_LEVEL', 'INFO').lower(), logging.INFO)
     )
 
 
