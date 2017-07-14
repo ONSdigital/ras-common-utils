@@ -1,4 +1,4 @@
-0.0.2 (unreleased)
+0.0.2 (2017-07-14)
 ------------------
 
 - Use upper-case names for service variables.
