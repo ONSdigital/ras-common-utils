@@ -1,4 +1,4 @@
-0.0.2 (2017-07-14)
+0.0.2 (2017-07-17)
 ------------------
 
 - Use upper-case names for service variables.
