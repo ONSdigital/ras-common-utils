@@ -94,7 +94,11 @@ class RasCloudFoundryConfig(RasConfig):
 
         vcap_services = json.loads(getenv('VCAP_SERVICES'))
         logger.debug("Ras common has populated VCAP_SERVICES.")
-        self._services = CloudFoundryServices(vcap_services)
+        try:
+            self._services = CloudFoundryServices(vcap_services)
+        except Exception as e:
+            print(e)
+        logger.error("private services variable is: {}".format(self._services))
 
     def dependency(self, name):
         try:
