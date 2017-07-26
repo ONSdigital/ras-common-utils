@@ -1,8 +1,10 @@
 import json
 from os import getenv
+from structlog import get_logger
 
 import yaml
 
+logger = get_logger()
 
 def map_dict(d, key_mapper=None, value_mapper=None):
     def ident(x):
@@ -91,6 +93,7 @@ class RasCloudFoundryConfig(RasConfig):
         super().__init__(config_data)
 
         vcap_services = json.loads(getenv('VCAP_SERVICES'))
+        logger.debug("Ras common has populated VCAP_SERVICES.")
         self._services = CloudFoundryServices(vcap_services)
 
     def dependency(self, name):
@@ -103,8 +106,10 @@ class RasCloudFoundryConfig(RasConfig):
 def make(config_data):
     vcap_application = getenv('VCAP_APPLICATION')
     if vcap_application:
+        logger.info("Ras common has detected a VCAP application environment variable")
         return RasCloudFoundryConfig(config_data)
     else:
+        logger.info("Ras common has NOT detected a VCAP application. Default config will be used.")
         return RasConfig(config_data)
 
 
