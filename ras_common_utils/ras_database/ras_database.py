@@ -31,7 +31,14 @@ class RasDatabase:
         assert(self.model_paths, "RasDatabase model_paths must be specified.")
         self._name = name
         self._config = config
-        db_connection = self._config.dependency[name].uri
+
+        if config.is_cloud_foundry:
+            logger.debug("RasDatabase config cloud foundry service URI is:{} ".format(config.services['uri']))
+            db_connection = config.services['uri']
+        else:
+            logger.debug("RasDatabase default DB connection USR is:{} ".format(config.dependency[name].uri))
+            db_connection = self._config.dependency[name].uri
+
         self._engine = create_engine(db_connection, convert_unicode=True)
         self._session = scoped_session(sessionmaker(), scopefunc=current_request)
         # TODO: review this session configuration
