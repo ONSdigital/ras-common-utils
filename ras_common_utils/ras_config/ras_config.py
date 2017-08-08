@@ -134,10 +134,13 @@ class RasCloudFoundryConfig(RasConfig):
             return super().dependency(name)
 
 
-
 def from_yaml_file(path):
     with open(path) as f:
         data = yaml.load(f.read())
+
+    return make(data)
+
+def make(data):
 
     vcap_application = getenv('VCAP_APPLICATION')
     if vcap_application:
@@ -146,6 +149,4 @@ def from_yaml_file(path):
     else:
         logger.info("Ras common has NOT detected a VCAP application. Default config will be used.")
         return RasConfig(data)
-
-
 
