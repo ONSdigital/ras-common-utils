@@ -68,7 +68,7 @@ class RasConfig:
             raise RasDependencyError("Dependency with name '{}' not found.".format(k))
 
     def dependencies(self):
-        return {k: DependencyProxy(self._dependencies[k], k) for k in self._dependencies.keys()}.items()
+        return {k: self.dependency(k) for k in self._dependencies.keys()}.items()
 
     def features(self):
         return self._features

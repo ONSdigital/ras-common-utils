@@ -1,7 +1,7 @@
 0.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix to ensure RasCloudFoundryConfig correctly resolves dependencies to VCAP_SERVICES values.
 
 
 0.0.2 (2017-07-17)

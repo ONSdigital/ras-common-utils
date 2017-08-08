@@ -124,8 +124,26 @@ class TestRasConfig(unittest.TestCase):
         ras_postgres = c.dependency('ras-postgres')
         self.assertEqual(ras_postgres['uri'], 'postgres://overridden')
 
+        # Also test the dependencies accessor
+        postgres_found = False
+        for d in c.dependencies():
+            if d[0] == 'ras-postgres':
+                self.assertEqual(d[1]['uri'], 'postgres://overridden')
+                postgres_found = True
+
+        self.assertTrue(postgres_found)
+
     @patch('ras_common_utils.ras_config.ras_config.getenv', new_callable=MockGetenv)
     def test_config_only_overrides_when_key_present_in_cloudfoundry(self, _):
         c = ras_config.make(yaml.load(CONFIG_FRAGMENT))
         ras_rabbit = c.dependency('ras-rabbit')
         self.assertEqual(ras_rabbit['protocols'], {'amqp': {'host': '0.0.0.0'}, 'other': {'host': '1.2.3.4'}})
+
+        # Also test the dependencies accessor
+        rabbit_found = False
+        for d in c.dependencies():
+            if d[0] == 'ras-rabbit':
+                self.assertEqual(d[1]['protocols'], {'amqp': {'host': '0.0.0.0'}, 'other': {'host': '1.2.3.4'}})
+                rabbit_found = True
+
+        self.assertTrue(rabbit_found)
