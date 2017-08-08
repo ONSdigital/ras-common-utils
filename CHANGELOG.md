@@ -1,4 +1,4 @@
-0.0.3 (unreleased)
+0.0.3 (2017-08-08)
 ------------------
 
 - Fix to ensure RasCloudFoundryConfig correctly resolves dependencies to VCAP_SERVICES values.
