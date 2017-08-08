@@ -2,6 +2,9 @@ import json
 from os import getenv
 
 import yaml
+from structlog import get_logger
+
+log = get_logger()
 
 
 def map_dict(d, key_mapper=None, value_mapper=None):
@@ -30,7 +33,6 @@ class DependencyProxy:
         return self[item]
 
     def __getitem__(self, item):
-        # TODO: consider converting the value to bool (as feature flags are always true/false)
         k = "{}.{}".format(self._name, item)
         return getenv(k) or self._dependency[item]
 
@@ -44,13 +46,13 @@ class FeaturesProxy:
         return self[item]
 
     def __getitem__(self, item):
+        # TODO: consider converting the value to bool (as feature flags are always true/false)
         k = "feature.{}".format(item)
         return getenv(k) or self._features.get(item)
 
 
 class RasConfig:
     def __init__(self, config_data):
-        # TODO: enable env var override
         self.service = {k: getenv(k, v) for k, v in config_data['service'].items()}
         self._dependencies = lower_keys(config_data.get('dependencies', {}))
         self._features = FeaturesProxy(config_data.get('features', {}))
@@ -103,8 +105,10 @@ class RasCloudFoundryConfig(RasConfig):
 def make(config_data):
     vcap_application = getenv('VCAP_APPLICATION')
     if vcap_application:
+        log.info("CloudFoundry detected. Creating CloudFoundry configuration object.")
         return RasCloudFoundryConfig(config_data)
     else:
+        log.info("CloudFoundry not detected. Creating standard configuration object.")
         return RasConfig(config_data)
 
 
