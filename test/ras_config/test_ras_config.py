@@ -15,6 +15,7 @@ dependencies:
     ras-postgres:
         host: my-host
         uri: my-database-uri
+        schema: my-schema
     ras-rabbit:
         hostname: 127.0.0.1
         password: blah
@@ -147,3 +148,9 @@ class TestRasConfig(unittest.TestCase):
                 rabbit_found = True
 
         self.assertTrue(rabbit_found)
+
+    @patch('ras_common_utils.ras_config.ras_config.getenv', new_callable=MockGetenv)
+    def test_cf_config_falls_back_to_yaml_values(self, _):
+        c = ras_config.make(yaml.load(CONFIG_FRAGMENT))
+        ras_postgres = c.dependency('ras-postgres')
+        self.assertEqual(ras_postgres['schema'], 'my-schema')

@@ -1,7 +1,7 @@
 0.0.4 (unreleased)
 ------------------
 
-- Fix issue looking up DB URI not via dependency proxy on CF.
+- Fix issue looking-up dependency values when running on CloudFoundry.
 
 
 0.0.3 (2017-08-08)

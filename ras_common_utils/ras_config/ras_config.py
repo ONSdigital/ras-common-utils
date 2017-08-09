@@ -25,16 +25,17 @@ class RasDependencyError(Exception):
 
 class DependencyProxy:
 
-    def __init__(self, dependency, name):
+    def __init__(self, dependency, name, overrides=None):
         self._dependency = lower_keys(dependency)
         self._name = name
+        self._overrides = overrides or {}
 
     def __getattr__(self, item):
         return self[item]
 
     def __getitem__(self, item):
         k = "{}.{}".format(self._name, item)
-        return getenv(k) or self._dependency[item]
+        return self._overrides.get(item) or getenv(k) or self._dependency[item]
 
 
 class FeaturesProxy:
@@ -95,11 +96,11 @@ class RasCloudFoundryConfig(RasConfig):
         vcap_services = json.loads(getenv('VCAP_SERVICES'))
         self._services = CloudFoundryServices(vcap_services)
 
-    def dependency(self, name):
+    def dependency(self, k):
         try:
-            return self._services.get(name)
+            return DependencyProxy(self._dependencies[k], k, overrides=self._services.get(k))
         except KeyError:
-            return super().dependency(name)
+            return super().dependency(k)
 
 
 def make(config_data):
