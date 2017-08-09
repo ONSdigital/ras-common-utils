@@ -31,7 +31,7 @@ class RasDatabase:
         assert(self.model_paths, "RasDatabase model_paths must be specified.")
         self._name = name
         self._config = config
-        db_connection = self._config.dependency[name].uri
+        db_connection = self._config.dependency[name]['uri']
         self._engine = create_engine(db_connection, convert_unicode=True)
         self._session = scoped_session(sessionmaker(), scopefunc=current_request)
         # TODO: review this session configuration

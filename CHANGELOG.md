@@ -1,7 +1,7 @@
 0.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix issue looking up DB URI not via dependency proxy on CF.
 
 
 0.0.3 (2017-08-08)
