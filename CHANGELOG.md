@@ -1,4 +1,4 @@
-0.0.4 (unreleased)
+0.0.4 (2017-08-09)
 ------------------
 
 - Fix issue looking-up dependency values when running on CloudFoundry.
