@@ -1,4 +1,4 @@
-0.0.5 (unreleased)
+0.0.5 (2017-08-11)
 ------------------
 
 - Enable overriding status code in RasError class.
