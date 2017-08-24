@@ -1,5 +1,4 @@
 from flask import Flask as BaseFlask, Config as BaseConfig
-from ras_common_utils.ras_config import ras_config
 
 
 class Config(BaseConfig):

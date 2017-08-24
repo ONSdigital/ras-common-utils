@@ -2,6 +2,9 @@ import json
 from os import getenv
 
 import yaml
+from structlog import get_logger
+
+log = get_logger()
 
 
 def map_dict(d, key_mapper=None, value_mapper=None):
@@ -22,17 +25,17 @@ class RasDependencyError(Exception):
 
 class DependencyProxy:
 
-    def __init__(self, dependency, name):
+    def __init__(self, dependency, name, overrides=None):
         self._dependency = lower_keys(dependency)
         self._name = name
+        self._overrides = overrides or {}
 
     def __getattr__(self, item):
         return self[item]
 
     def __getitem__(self, item):
-        # TODO: consider converting the value to bool (as feature flags are always true/false)
         k = "{}.{}".format(self._name, item)
-        return getenv(k) or self._dependency[item]
+        return self._overrides.get(item) or getenv(k) or self._dependency[item]
 
 
 class FeaturesProxy:
@@ -44,13 +47,13 @@ class FeaturesProxy:
         return self[item]
 
     def __getitem__(self, item):
+        # TODO: consider converting the value to bool (as feature flags are always true/false)
         k = "feature.{}".format(item)
         return getenv(k) or self._features.get(item)
 
 
 class RasConfig:
     def __init__(self, config_data):
-        # TODO: enable env var override
         self.service = {k: getenv(k, v) for k, v in config_data['service'].items()}
         self._dependencies = lower_keys(config_data.get('dependencies', {}))
         self._features = FeaturesProxy(config_data.get('features', {}))
@@ -68,7 +71,7 @@ class RasConfig:
             raise RasDependencyError("Dependency with name '{}' not found.".format(k))
 
     def dependencies(self):
-        return {k: DependencyProxy(self._dependencies[k], k) for k in self._dependencies.keys()}.items()
+        return {k: self.dependency(k) for k in self._dependencies.keys()}.items()
 
     def features(self):
         return self._features
@@ -93,18 +96,20 @@ class RasCloudFoundryConfig(RasConfig):
         vcap_services = json.loads(getenv('VCAP_SERVICES'))
         self._services = CloudFoundryServices(vcap_services)
 
-    def dependency(self, name):
+    def dependency(self, k):
         try:
-            return self._services.get(name)
+            return DependencyProxy(self._dependencies[k], k, overrides=self._services.get(k))
         except KeyError:
-            return super().dependency(name)
+            return super().dependency(k)
 
 
 def make(config_data):
     vcap_application = getenv('VCAP_APPLICATION')
     if vcap_application:
+        log.info("CloudFoundry detected. Creating CloudFoundry configuration object.")
         return RasCloudFoundryConfig(config_data)
     else:
+        log.info("CloudFoundry not detected. Creating standard configuration object.")
         return RasConfig(config_data)
 
 
