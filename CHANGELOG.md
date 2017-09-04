@@ -1,7 +1,7 @@
-0.0.6 (unreleased)
+0.0.6 (2017-09-04)
 ------------------
 
-- Nothing changed yet.
+- Convert feature flag results to boolean.
 
 
 0.0.5 (2017-08-11)

@@ -49,7 +49,11 @@ class FeaturesProxy:
     def __getitem__(self, item):
         # TODO: consider converting the value to bool (as feature flags are always true/false)
         k = "feature.{}".format(item)
-        return getenv(k) or self._features.get(item)
+        result = getenv(k) or self._features.get(item)
+        try:
+            return result.lower() in ('true', 't', 'yes', 'y', '1')
+        except AttributeError:
+            return result is True
 
 
 class RasConfig:

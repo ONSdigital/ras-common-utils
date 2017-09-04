@@ -24,6 +24,11 @@ dependencies:
                 host: 0.0.0.0
             other:
                 host: 1.2.3.4
+                
+features:
+    config-true-flag: 'true'
+    config-false-flag: 'false'
+    config-bool-true: true
 """
 
 CONFIG_NO_DEPENDENCIES = """
@@ -154,3 +159,23 @@ class TestRasConfig(unittest.TestCase):
         c = ras_config.make(yaml.load(CONFIG_FRAGMENT))
         ras_postgres = c.dependency('ras-postgres')
         self.assertEqual(ras_postgres['schema'], 'my-schema')
+
+    @patch('ras_common_utils.ras_config.ras_config.getenv', new_callable=MockGetenv)
+    def test_feature_flag_coerces_to_boolean(self, _):
+        c = ras_config.make(yaml.load(CONFIG_FRAGMENT))
+
+        expected_true = c.feature('config-bool-true')
+        self.assertTrue(type(expected_true) is bool)
+        self.assertTrue(expected_true)
+
+        expected_true = c.feature('config-true-flag')
+        self.assertTrue(type(expected_true) is bool)
+        self.assertTrue(expected_true)
+
+        expected_false = c.feature('config-false-flag')
+        self.assertTrue(type(expected_false) is bool)
+        self.assertFalse(expected_false)
+
+        expected_false = c.feature('config-nonexistent-flag')
+        self.assertTrue(type(expected_false) is bool)
+        self.assertFalse(expected_false)
