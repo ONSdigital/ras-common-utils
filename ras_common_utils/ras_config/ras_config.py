@@ -47,7 +47,6 @@ class FeaturesProxy:
         return self[item]
 
     def __getitem__(self, item):
-        # TODO: consider converting the value to bool (as feature flags are always true/false)
         k = "feature.{}".format(item)
         result = getenv(k) or self._features.get(item)
         try:

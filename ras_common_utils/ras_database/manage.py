@@ -30,7 +30,9 @@ class Manage:
 
         # fix-up the postgres schema:
         from ras_common_utils.ras_database.base import Base
-        Base.metadata.schema = db_schema if db_connection.startswith('postgres') else None
+        if db_connection.startswith('postgres'):
+            for t in Base.metadata.sorted_tables:
+                t.schema = db_schema
 
         logger.info("Creating database with uri '{}'".format(db_connection))
         if db_connection.startswith('postgres'):
