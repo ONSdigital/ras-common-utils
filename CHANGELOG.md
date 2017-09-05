@@ -1,4 +1,4 @@
-0.0.7 (unreleased)
+0.0.7 (2017-09-05)
 ------------------
 
 - Ensure that schema of all tables is correctly adjusted for postgres deployment.
