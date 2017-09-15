@@ -7,28 +7,28 @@ from ras_common_utils.ras_config import ras_config
 from ras_common_utils.ras_config.ras_config import RasConfig, RasDependencyError
 
 CONFIG_FRAGMENT = """
-service:
-    name: my-service
-    version: 1.0.0
+SERVICE:
+    NAME: my-service
+    VERSION: 1.0.0
     
-dependencies:
-    ras-postgres:
-        host: my-host
-        uri: my-database-uri
-        schema: my-schema
-    ras-rabbit:
-        hostname: 127.0.0.1
-        password: blah
-        protocols:
-            amqp:
-                host: 0.0.0.0
-            other:
-                host: 1.2.3.4
+DEPENDENCIES:
+    RAS_POSTGRES:
+        HOST: my-host
+        URI: my-database-uri
+        SCHEMA: my-schema
+    RAS_RABBIT:
+        HOSTNAME: 127.0.0.1
+        PASSWORD: blah
+        PROTOCOLS:
+            AMQP:
+                HOST: 0.0.0.0
+            OTHER:
+                HOST: 1.2.3.4
                 
-features:
-    config-true-flag: 'true'
-    config-false-flag: 'false'
-    config-bool-true: true
+FEATURES:
+    CONFIG_TRUE_FLAG: 'true'
+    CONFIG_FALSE_FLAG: 'false'
+    CONFIG_BOOL_FLAG: true
 """
 
 CONFIG_NO_DEPENDENCIES = """

@@ -1,7 +1,10 @@
 0.0.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- On CloudFoundry, carry out validation checks to ensure all required environment variables are found in the 
+environment, throwing an exception to report all missing values.
+- Convert to using upper-case for all environment variables.
+- Use underscore rather than period as the delimiter in environment variables.
 
 
 0.0.7 (2017-09-05)
