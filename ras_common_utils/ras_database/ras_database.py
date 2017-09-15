@@ -45,7 +45,5 @@ class RasDatabase:
     def _create_database(self):
         db_config = self._config.dependency[self._name]
         manager = Manage(db_config, self._engine)
-        if self._config.get('drop_database'):
-            manager.drop()
         manager.create()
         return self

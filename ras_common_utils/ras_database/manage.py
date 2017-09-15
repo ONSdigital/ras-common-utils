@@ -9,8 +9,8 @@ class Manage:
         self._engine = engine
 
     def drop(self):
-        db_connection = self._config['uri']
-        db_schema = self._config['schema']
+        db_connection = self._config['URI']
+        db_schema = self._config['SCHEMA']
 
         # fix-up the postgres schema:
         from ras_common_utils.ras_database.base import Base

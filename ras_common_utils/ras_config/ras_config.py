@@ -61,7 +61,7 @@ class FeaturesProxy:
         self._features = features
 
     def __getattr__(self, item):
-        return self[item]
+        return self[item.upper()]
 
     def __getitem__(self, item):
         k = "FEATURE{}{}".format(DELIMITER, item)
