@@ -1,2 +1,3 @@
 [run]
-omit = .build-test/*, test/*, setup.py, skeleton.py, main.py
+branch = True
+omit = project/tests/*

@@ -1,9 +1,7 @@
-import datetime
 import logging
 import sys
 
 import structlog
-
 
 LEVELS = {'debug': logging.DEBUG,
           'info': logging.INFO,

@@ -10,7 +10,7 @@ CONFIG_FRAGMENT = """
 service:
     name: my-service
     version: 1.0.0
-    
+
 dependencies:
     ras-postgres:
         host: my-host
@@ -24,7 +24,7 @@ dependencies:
                 host: 0.0.0.0
             other:
                 host: 1.2.3.4
-                
+
 features:
     config-true-flag: 'true'
     config-false-flag: 'false'
@@ -116,7 +116,7 @@ class TestRasConfig(unittest.TestCase):
 
     def test_get_nonexistent_dependency_raises_exception(self):
         c = RasConfig(yaml.load(CONFIG_FRAGMENT))
-        with self.assertRaises(RasDependencyError) as cm:
+        with self.assertRaises(RasDependencyError):
             c.dependency('ras-other')
 
     def test_get_dependency_returns_arbitrary_structure(self):

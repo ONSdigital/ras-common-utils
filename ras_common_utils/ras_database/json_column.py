@@ -32,4 +32,5 @@ class JsonColumn(sqlalchemy.TypeDecorator):
     def copy_value(self, value):
         return copy.deepcopy(value)
 
+
 mutable.MutableDict.associate_with(JsonColumn)

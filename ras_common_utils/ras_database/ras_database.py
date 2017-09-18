@@ -28,7 +28,7 @@ class RasDatabase:
         return cls
 
     def __init__(self, name, config):
-        assert(self.model_paths, "RasDatabase model_paths must be specified.")
+        assert self.model_paths, "RasDatabase model_paths must be specified."
         self._name = name
         self._config = config
         db_connection = self._config.dependency[name].uri
