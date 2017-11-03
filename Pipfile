@@ -1,0 +1,7 @@
+[dev-packages]
+
+coverage = ">=4.4"
+"flake8" = ">=3.3.0,<4"
+pytest = "*"
+pytest-cov = "*"
+"-e ." = "*"
