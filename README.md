@@ -61,11 +61,16 @@ service:
 
 ## Testing
 
-Ensure you have [tox](https://tox.readthedocs.io/en/latest/) installed, and simply run `tox` in the project root.
+```sh
+$ pip install -e . --upgrade
+$ pip install pipenv --upgrade
+$ pipenv install --dev
+$ pipenv run ./scripts/test.sh
+```
 
 ## Build / release
 
-Using [zest.releaser](https://pypi.python.org/pypi/zest.releaser) (included in the requirements.txt file). 
+Using [zest.releaser](https://pypi.python.org/pypi/zest.releaser).
 
 Please read the zest.releaser documentation to see the available commands and what they do.
 In general, run the command `fullrelease` in the project root. To suppress prompts, run `fullrelease --no-input`.

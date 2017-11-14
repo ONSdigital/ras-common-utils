@@ -1,6 +1,5 @@
 include *.py 
 recursive-include ras_common_utils *.py
-include requirements.txt
 include README.rst
 include *.md
 include *.txt
@@ -8,7 +7,6 @@ include *.yaml
 include .coveragerc
 include LICENSE
 include Makefile
-include tox.ini
 include .cfignore
 recursive-include scripts *.sh
 recursive-include test *.py
