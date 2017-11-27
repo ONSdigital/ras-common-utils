@@ -44,7 +44,9 @@ setup(
         "ras_common_utils",
     ],
     package_data={
-        "requirements.txt"
+        "ras_common_utils": [
+            "requirements.txt",
+        ]
     },
     install_requires=installRequirements,
     entry_points={
