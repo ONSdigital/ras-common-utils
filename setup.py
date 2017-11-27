@@ -8,7 +8,7 @@ from setuptools import setup
 
 try:
     # For setup.py install
-    from ras_common_utils import __version__ as version
+    from ras_common_utils.__version__ import __version__ as version
 except ImportError:
     # For pip installations
     version = str(
