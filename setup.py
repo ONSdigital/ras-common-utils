@@ -1,50 +1,56 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# encoding: UTF-8
 
-import codecs
-import os
-from setuptools import setup, find_packages
+import ast
+import os.path
 
-here = os.path.abspath(os.path.dirname(__file__))
+from setuptools import setup
 
-with codecs.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+try:
+    # For setup.py install
+    from ras_common_utils.__version__ import __version__ as version
+except ImportError:
+    # For pip installations
+    version = str(
+        ast.literal_eval(
+            open(os.path.join(
+                os.path.dirname(__file__),
+                "ras-common-utils", "__init__.py"),
+                'r').read().split("=")[-1].strip()
+            )
 
-about = {}
-with open(os.path.join(here, "ras_common_utils", "__version__.py")) as f:
-    exec(f.read(), about)
+        )
 
-required = [
-    'Flask>=0.12.2',
-    'PyYAML>=3.12',
-    'SQLAlchemy>=1.1.10',
-    'structlog>=17.2.0',
-    'zest.releaser[recommended]'
+install_requirements = [
+    i.strip() for i in open(
+        os.path.join(os.path.dirname(__file__), "requirements.txt"), 'r'
+    ).readlines()
 ]
 
 setup(
-    name='ras_common_utils',
-    version=about['__version__'],
-    description='The Common library for ONS RAS Micro-Services.',
-    long_description=long_description,
-    url='https://github.com/ONSdigital/ras-common-utils',
-    author='RAS Development Team',
-    author_email='onsdigital@linux.co.uk',
-    license='MIT',
+    name="ras-common-utils",
+    version=version,
+    description="A common library for RAS utilities",
+    author="G Irving",
+    author_email="gemma.i_95@hotmail.co.uk",
+    url="https://github.com/ONSdigital/ras-common-utils",
+    long_description=__doc__,
     classifiers=[
-        # How mature is this project? Common values are
-        #   3 - Alpha
-        #   4 - Beta
-        #   5 - Production/Stable
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6'
+        "Opersting System :: OS Independent",
+        "Programming Language :: Python :: 3.6",
+        "License :: OSI Approved :: MIT License"
     ],
-    keywords=['micro-service', 'ons-ras'],
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
-    install_requires=required,
-    zip_safe=False
+    packages=[
+        "ras_common_utils",
+    ],
+    package_data={
+        "ras_common_utils": [
+            "requirements.txt",
+        ]
+    },
+    install_requires=install_requirements,
+    entry_points={
+        "console_scripts": [
+        ],
+    }
 )
