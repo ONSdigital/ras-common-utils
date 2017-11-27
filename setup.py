@@ -21,7 +21,7 @@ except ImportError:
 
         )
 
-installRequirements = [
+install_requirements = [
     i.strip() for i in open(
         os.path.join(os.path.dirname(__file__), "requirements.txt"), 'r'
     ).readlines()
@@ -48,7 +48,7 @@ setup(
             "requirements.txt",
         ]
     },
-    install_requires=installRequirements,
+    install_requires=install_requirements,
     entry_points={
         "console_scripts": [
         ],
