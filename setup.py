@@ -4,7 +4,7 @@
 import ast
 import os.path
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 try:
     # For setup.py install
@@ -15,11 +15,10 @@ except ImportError:
         ast.literal_eval(
             open(os.path.join(
                 os.path.dirname(__file__),
-                "ras-common-utils", "__init__.py"),
+                "ras_common_utils", "__version__.py"),
                 'r').read().split("=")[-1].strip()
-            )
-
         )
+    )
 
 install_requirements = [
     i.strip() for i in open(
@@ -36,12 +35,16 @@ setup(
     url="https://github.com/ONSdigital/ras-common-utils",
     long_description=__doc__,
     classifiers=[
-        "Opersting System :: OS Independent",
         "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License"
     ],
     packages=[
         "ras_common_utils",
+        "ras_common_utils.ras_config",
+        "ras_common_utils.ras_database",
+        "ras_common_utils.ras_error",
+        "ras_common_utils.ras_logger",
+        "ras_common_utils.util",
     ],
     package_data={
         "ras_common_utils": [
@@ -50,7 +53,6 @@ setup(
     },
     install_requires=install_requirements,
     entry_points={
-        "console_scripts": [
-        ],
+        "console_scripts": []
     }
 )

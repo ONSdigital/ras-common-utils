@@ -1,3 +1,20 @@
+[[source]]
+
+name = "pypi"
+verify_ssl = true
+url = "https://pypi.python.org/simple"
+
+[requires]
+
+python_version = "3.6"
+
+[packages]
+
+Flask = "==0.12.2"
+PyYAML = "==3.12"
+SQLAlchemy = "==1.1.10"
+structlog = "==17.2.0"
+
 [dev-packages]
 
 coverage = ">=4.4"
